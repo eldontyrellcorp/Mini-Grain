@@ -1,7 +1,7 @@
 /* SPDX-License-Identifier: GPL-3.0-only
  * Host test of the sample link (gr_link.c): the frames tools/grain_sample.py makes go through lk_service on a
  * simulated NOR flash; the slot is listed, loaded into a part, stored again, erased.
- *   python3 tools/grain_sample.py frames 3 build/test_tone.wav build/frames.txt
+ *   python3 tests/gen_tone.py build/tone.wav && python3 tools/grain_sample.py frames 3 build/tone.wav build/frames.txt
  *   cc -O1 -Ifirmware/src -Ibuild/gen tests/host_link.c -o build/host_link -lm && build/host_link build/frames.txt */
 #include <stdint.h>
 #include <stdio.h>

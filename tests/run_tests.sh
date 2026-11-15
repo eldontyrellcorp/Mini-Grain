@@ -50,7 +50,7 @@ PY
 echo "== the Drone and Pad parts"; python3 tests/host_amb.py
 echo "== effects"; build/host_fx
 echo "== sequencer"; build/host_seq
-echo "== sample link"; python3 tools/grain_sample.py frames 3 tests/tone.wav build/frames.txt; build/host_link build/frames.txt
+echo "== sample link"; python3 tests/gen_tone.py build/tone.wav; python3 tools/grain_sample.py frames 3 build/tone.wav build/frames.txt; build/host_link build/frames.txt
 echo "== screens"; build/host_ui build/ui; python3 tests/ui_png.py build/ui
 echo "== the sample page (web/index.html), against the firmware's link"
 if command -v node >/dev/null; then node web/test_link.mjs; else echo "no node: skipped"; fi

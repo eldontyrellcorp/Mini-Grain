@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: GPL-3.0-only
 // The page's encoder against the Python tool: the same WAV must give byte-identical SysEx frames.
-//   python3 tools/grain_sample.py frames 3 tests/tone.wav build/frames.txt && node web/test_link.mjs
+//   python3 tests/gen_tone.py build/tone.wav && python3 tools/grain_sample.py frames 3 build/tone.wav build/frames.txt && node web/test_link.mjs
 import { readFileSync } from 'node:fs';
 import { createRequire } from 'node:module';
 const G = createRequire(import.meta.url)('./grainlink.js');
 
-const wav = readFileSync(new URL('../tests/tone.wav', import.meta.url));
+const wav = readFileSync(new URL('../build/tone.wav', import.meta.url));
 let p = 12, fmt = null, data = null;
 while (p + 8 <= wav.length) {                       // RIFF chunks
   const id = wav.toString('ascii', p, p + 4), n = wav.readUInt32LE(p + 4);
@@ -13,7 +13,7 @@ while (p + 8 <= wav.length) {                       // RIFF chunks
   if (id === 'data') data = wav.subarray(p + 8, p + 8 + n);
   p += 8 + n + (n & 1);
 }
-if (!fmt || fmt.ch !== 1 || fmt.bits !== 16) throw new Error('tests/tone.wav: expected 16-bit mono');
+if (!fmt || fmt.ch !== 1 || fmt.bits !== 16) throw new Error('build/tone.wav: expected 16-bit mono');
 const x = new Float64Array(data.length / 2);
 for (let i = 0; i < x.length; i++) x[i] = data.readInt16LE(2 * i);
 const samples = G.toInt16(x, 30000);
