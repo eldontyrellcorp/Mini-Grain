@@ -9,7 +9,7 @@
 #include <string.h>
 #include <math.h>
 #define GR_POOL
-#define FELUCCA_ID "FM-1_900"
+#define FELUCCA_ID "FM-1_963"
 static uint32_t fm1_ms;
 static uint8_t flash_ok = 1;
 static void gr_render(int32_t *, int32_t *);
